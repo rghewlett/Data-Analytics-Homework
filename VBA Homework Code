@@ -1,0 +1,40 @@
+Sub stock_ticker()
+
+ Dim ws As Worksheet
+ For Each ws In Worksheets
+ 
+
+    Dim stock_ticker As String
+    Dim stock_volume_total As Double
+    Dim summary_table_row As Integer
+    Dim RowCount As Long
+    
+    stock_volume_total = 0
+    summary_table_row = 2
+    
+    RowCount = Cells(Rows.Count, "A").End(xlUp).Row
+    
+    For i = 2 To RowCount
+        If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+            stock_ticker = Cells(i, 1).Value
+            stock_volume_total = stock_volume_total + Cells(i, 7).Value
+            
+            Range("I" & summary_table_row).Value = stock_ticker
+            Range("J" & summary_table_row).Value = stock_volume_total
+            
+            summary_table_row = summary_table_row + 1
+            stock_volume_total = 0
+            
+        Else
+            stock_volume_total = stock_volume_total + Cells(i, 7).Value
+            
+        End If
+    
+    Next i
+    
+    ws.Activate
+    
+    Next
+    
+End Sub
+
